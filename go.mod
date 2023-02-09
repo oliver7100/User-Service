@@ -5,6 +5,8 @@ go 1.19
 require (
 	google.golang.org/grpc v1.53.0
 	google.golang.org/protobuf v1.28.1
+	gorm.io/driver/mysql v1.4.6
+	gorm.io/gorm v1.24.5
 )
 
 require (
@@ -16,6 +18,4 @@ require (
 	golang.org/x/sys v0.4.0 // indirect
 	golang.org/x/text v0.6.0 // indirect
 	google.golang.org/genproto v0.0.0-20230110181048-76db0878b65f // indirect
-	gorm.io/driver/mysql v1.4.6 // indirect
-	gorm.io/gorm v1.24.5 // indirect
 )

@@ -11,8 +11,21 @@ type service struct {
 	Conn *database.Connection
 }
 
-func (*service) GetUser(ctx context.Context, req *GetUserRequest) (*CreateUserResponse, error) {
-	return &CreateUserResponse{}, nil
+func (s *service) GetUser(ctx context.Context, req *GetUserRequest) (*CreateUserResponse, error) {
+
+	var user database.User
+
+	if tx := s.Conn.Instance.Find(&user, "email = ?", req.GetEmail()); tx.Error != nil {
+		return nil, tx.Error
+	}
+
+	return &CreateUserResponse{
+		User: &User{
+			Name:     user.Name,
+			Email:    user.Email,
+			Password: user.Password,
+		},
+	}, nil
 }
 
 func (s *service) CreateUser(ctx context.Context, req *CreateUserRequest) (*CreateUserResponse, error) {
