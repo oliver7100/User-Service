@@ -6,8 +6,8 @@ import (
 
 	"google.golang.org/grpc"
 
-	"github.com/users/oliver7100/user-service/database"
-	"github.com/users/oliver7100/user-service/proto"
+	"github.com/oliver7100/user-service/database"
+	"github.com/oliver7100/user-service/proto"
 )
 
 func main() {

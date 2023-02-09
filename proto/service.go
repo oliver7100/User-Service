@@ -3,7 +3,7 @@ package proto
 import (
 	"context"
 
-	"github.com/users/oliver7100/user-service/database"
+	"github.com/oliver7100/user-service/database"
 )
 
 type service struct {
