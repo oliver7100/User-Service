@@ -19,8 +19,6 @@ func main() {
 		log.Fatalf("Cant connect to db")
 	}
 
-	dbConnection.Instance.Find(database.User{})
-
 	listener, err := net.Listen("tcp", ":9000")
 
 	if err != nil {
