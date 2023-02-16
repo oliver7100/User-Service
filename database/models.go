@@ -1,7 +1,7 @@
 package database
 
 type User struct {
-	Email    string
-	Password string
+	Email    string `gorm:"type:varchar(255);uniqueIndex"`
+	Password string ``
 	Name     string
 }
