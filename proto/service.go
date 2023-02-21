@@ -2,7 +2,6 @@ package proto
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/oliver7100/user-service/database"
 	"github.com/oliver7100/user-service/internal"
@@ -19,10 +18,6 @@ func (s *service) CanUserLogin(ctx context.Context, req *CanUserLoginRequest) (*
 	if tx := s.Conn.Instance.First(&user, "email = ?", req.GetEmail()); tx.Error != nil {
 		return nil, tx.Error
 	}
-
-	fmt.Println(
-		"dadada",
-	)
 
 	if ok, err := internal.HashCompare(req.Password, user.Password); ok {
 		return &CanUserLoginResponse{
