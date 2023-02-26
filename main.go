@@ -29,9 +29,7 @@ func main() {
 
 	proto.RegisterUserServiceServer(
 		s,
-		proto.CreateNewService(
-			dbConnection,
-		),
+		proto.CreateNewService(),
 	)
 
 	if err := s.Serve(listener); err != nil {

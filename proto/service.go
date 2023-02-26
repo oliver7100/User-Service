@@ -19,7 +19,7 @@ func (s *service) CanUserLogin(ctx context.Context, req *CanUserLoginRequest) (*
 		return nil, tx.Error
 	}
 
-	if ok, err := internal.HashCompare(req.Password, user.Password); ok {
+	if ok, err := internal.HashCompare(req.Password, *user.Password); ok {
 		return &CanUserLoginResponse{
 			Valid: true,
 		}, nil
@@ -30,33 +30,26 @@ func (s *service) CanUserLogin(ctx context.Context, req *CanUserLoginRequest) (*
 
 func (s *service) GetUser(ctx context.Context, req *GetUserRequest) (*CreateUserResponse, error) {
 
-	var user database.User
+	var user CreateUserResponse
 
-	if tx := s.Conn.Instance.First(&user, "email = ?", req.GetEmail()); tx.Error != nil {
+	if tx := s.Conn.Instance.First(&user, "username = ?", req.GetUsername()); tx.Error != nil {
 		return nil, tx.Error
 	}
 
-	return &CreateUserResponse{
-		User: &User{
-			Name:     user.Name,
-			Email:    user.Email,
-			Password: user.Password,
-		},
-	}, nil
+	return &user, nil
 }
 
 func (s *service) CreateUser(ctx context.Context, req *CreateUserRequest) (*CreateUserResponse, error) {
 	var model database.User
 
-	hashedPw, err := internal.HashPassword(req.User.Password)
+	hashedPw, err := internal.HashPassword(req.GetPassowrd())
 
 	if err != nil {
 		return nil, err
 	}
 
-	model.Name = req.User.Name
-	model.Email = req.User.Email
-	model.Password = hashedPw
+	model.Username = &req.Username
+	model.Password = &hashedPw
 
 	if res := s.Conn.Instance.Create(&model); res.Error != nil {
 		return nil, res.Error
@@ -64,9 +57,7 @@ func (s *service) CreateUser(ctx context.Context, req *CreateUserRequest) (*Crea
 
 	return &CreateUserResponse{
 		User: &User{
-			Name:     model.Name,
-			Password: model.Password,
-			Email:    model.Email,
+			Username: req.Username,
 		},
 	}, nil
 }

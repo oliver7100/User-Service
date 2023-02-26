@@ -3,23 +3,60 @@ syntax = "proto3";
 package proto;
 option go_package = "./proto";
 
+// <Model>
 message User {
-    string email = 1;
-    string password = 2;
-    string name = 3;
+    string Username = 2;
+    ContactInformation ContactInformation = 3;
+    Profile Profile = 4;
 }
 
+message ContactInformation {
+    string Email = 1;
+    string Phone = 2;
+    string City = 3;
+    string Address = 4;
+    string Postal = 5;
+}
+
+message Profile {
+    string Name = 1;
+    string Description = 2;
+    string Avatar = 3;
+    repeated Image Images = 4;
+    string Role = 5;
+}
+
+message Image {
+    string Description = 1;
+    string Uri = 2;
+}
+// </Model>
+
+
+// <CreateUser>
 message CreateUserRequest {
-    User user = 1;
+    string Username = 1;
+    string Passowrd = 2;
 }
 
 message CreateUserResponse {
-    User user = 1;
+    User User = 1;
+}
+// </CreateUser>
+
+
+// <GetUser>
+message GetUserRequest {
+    oneof Identifier {
+        int32 UserId = 1;
+        string Username = 2;
+    }
 }
 
-message GetUserRequest {
-    string email = 1;
+message GetUserResponse {
+    User User = 1;
 }
+// </GetUser>
 
 message CanUserLoginRequest {
     string email = 1;
@@ -31,7 +68,7 @@ message CanUserLoginResponse {
 }
 
 service UserService {
-    rpc GetUser(GetUserRequest) returns (CreateUserResponse) {};
+    rpc GetUser(GetUserRequest) returns (GetUserResponse) {};
     rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {};
     rpc CanUserLogin(CanUserLoginRequest) returns (CanUserLoginResponse) {};
 }
