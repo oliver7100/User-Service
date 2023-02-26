@@ -12,7 +12,13 @@ type Connection struct {
 func NewDatabaseConnection(dsn string) (*Connection, error) {
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
-	db.AutoMigrate(&User{})
+	db.AutoMigrate(
+		&User{},
+		&ContactInformation{},
+		Role{},
+		Profile{},
+		Image{},
+	)
 
 	if err != nil {
 		return nil, err

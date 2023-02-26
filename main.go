@@ -12,7 +12,7 @@ import (
 
 func main() {
 	dbConnection, err := database.NewDatabaseConnection(
-		"root:root@tcp(127.0.0.1:3306)/db_user_service?charset=utf8mb4&parseTime=True&loc=Local",
+		"services:AVNS_zWWallm_soPdGTwcPQJ@tcp(db-mysql-fmf-do-user-7517862-0.b.db.ondigitalocean.com:25060)/db_user_service?charset=utf8mb4&parseTime=True&loc=Local",
 	)
 
 	if err != nil {
@@ -29,7 +29,7 @@ func main() {
 
 	proto.RegisterUserServiceServer(
 		s,
-		proto.CreateNewService(),
+		proto.CreateNewService(dbConnection),
 	)
 
 	if err := s.Serve(listener); err != nil {

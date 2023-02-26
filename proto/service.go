@@ -28,9 +28,9 @@ func (s *service) CanUserLogin(ctx context.Context, req *CanUserLoginRequest) (*
 	}
 }
 
-func (s *service) GetUser(ctx context.Context, req *GetUserRequest) (*CreateUserResponse, error) {
+func (s *service) GetUser(ctx context.Context, req *GetUserRequest) (*GetUserResponse, error) {
 
-	var user CreateUserResponse
+	var user GetUserResponse
 
 	if tx := s.Conn.Instance.First(&user, "username = ?", req.GetUsername()); tx.Error != nil {
 		return nil, tx.Error
