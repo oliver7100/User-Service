@@ -42,7 +42,7 @@ func (s *service) GetUser(ctx context.Context, req *GetUserRequest) (*GetUserRes
 func (s *service) CreateUser(ctx context.Context, req *CreateUserRequest) (*CreateUserResponse, error) {
 	var model database.User
 
-	hashedPw, err := internal.HashPassword(req.GetPassowrd())
+	hashedPw, err := internal.HashPassword(req.GetPassword())
 
 	if err != nil {
 		return nil, err

@@ -6,9 +6,9 @@ type User struct {
 	gorm.Model
 	Username             *string            `gorm:"type:varchar(255);uniqueIndex;not null;" json:"username"`
 	Password             *string            `json:"password" gorm:"not null"`
-	ContactInformationID int                `json:"contactInformationId"`
+	ContactInformationID *int               `json:"contactInformationId"`
 	ContactInformation   ContactInformation `json:"contactInformation"`
-	ProfileID            int                `json:"profileId"`
+	ProfileID            *int               `json:"profileId"`
 	Profile              Profile            `json:"profile"`
 }
 
@@ -27,7 +27,7 @@ type Profile struct {
 	Description string  `json:"description"`
 	Avatar      string  `json:"avatar"`
 	Images      []Image `json:"images"`
-	RoleID      int     `json:"roleId"`
+	RoleID      *int    `json:"roleId"`
 	Role        Role    `json:"role"`
 }
 
@@ -35,7 +35,7 @@ type Image struct {
 	gorm.Model
 	Description *string `json:"description" gorm:"not null"`
 	Uri         *string `json:"uri"`
-	ProfileID   int     `json:"profileId"`
+	ProfileID   *int    `json:"profileId"`
 }
 
 type Role struct {
